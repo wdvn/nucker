@@ -4,7 +4,8 @@ import "core:fmt"
 import "core:os"
 
 main :: proc() {
-// Kiểm tra tham số đầu vào
+    check_dependencies()
+    // Kiểm tra tham số đầu vào
     if len(os.args) < 2 {
         show_help()
         return
@@ -28,7 +29,13 @@ main :: proc() {
 }
 
 init_project :: proc() {
-    fmt.println("init")
+    if os.is_file("./nucker.json"){
+        panic("Module already exist")
+    }
+
+    data := "{}"
+    os.write_entire_file("./nucker.json", transmute([]byte)data, true)
+
 }
 
 install_dependencies :: proc() {
