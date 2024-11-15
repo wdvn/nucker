@@ -3,7 +3,6 @@ package nucker
 import "core:encoding/json"
 import "core:fmt"
 import "core:os"
-import "core:os/os2"
 
 Module :: struct{
     repo: string,
@@ -22,11 +21,6 @@ all:Nucker
 
 main :: proc() {
     all = new(Nucker)^
-    err := check_dependencies()
-    if err != nil{
-        fmt.printf("git: %s", os2.error_string(err))
-        return
-    }
     // Kiểm tra tham số đầu vào
     if len(os.args) < 2 {
         show_help()
@@ -44,7 +38,6 @@ main :: proc() {
             show_help()
             return
         }
-        install_dependencies(os.args[2])
     case "update":
         update_dependencies()
     case "help", "-h", "--help":
